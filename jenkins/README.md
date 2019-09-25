@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# linux
-=======
 # docker-centos-jenkins
 
 A Dockerfile that produces a CentOS-based Docker image that will run the latest stable [Jenkins][jenkins].
@@ -77,4 +74,3 @@ $ make run PORT=127.0.0.1:8080 \
            PASS=Whatz03v3r
 ```
 
->>>>>>> d2934c2df931630e371a68616c9d596a5c9d3118
