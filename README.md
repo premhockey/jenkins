@@ -52,29 +52,10 @@ web1`.
 
 ``` shell
 $ mkdir -p /srv/docker/lon-dev-web
-$ docker run -d -name="web1" \
-             -p 127.0.0.1:80:80 \
-             -v /srv/docker/lon-dev-web:/srv/www \
-             -e USER="super" \
-             -e PASS="Whatz03v3r" \
-             internavenue/nginx
+$  docker run -d --name="jenkin" -p 10.250.6.11:80:8080 -v /srv/docker/lon-dev-web:/srv/www -e USER="jenkins" -e PASS="jenkins" jenkins
+
 ```
 
-Alternately, you can run the following if you have *GNU Make* installed...
-
-``` shell
-$ make run
-```
-
-You can also specify a custom port to bind to on the host, a custom web root
-directory, and the superuser username and password on the host like so:
-
-``` shell
-$ sudo mkdir -p /srv/docker/lon-dev-web
-$ make run PORT=127.0.0.1:8080 \
-           DATA_DIR=/my/spec/data/dir \
-           USER=super \
-           PASS=Whatz03v3r
-```
+``
 
 >>>>>>> d2934c2df931630e371a68616c9d596a5c9d3118
