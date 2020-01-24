@@ -1,16 +1,22 @@
-FROM internavenue/centos-base:centos7
+FROM centos:7
 
-MAINTAINER Intern Avenue Dev Team <dev@internavenue.com>
+RUN yum -y install wget openssh-server openssh initscripts
 
 RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
 RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 
 RUN yum -y install \
-  java-1.7.0-openjdk \
-  jenkins
+  java-1.8.0-openjdk-devel\
+  jenkins\
+  openssh\
+  openssh-clients \
+  which \
+  bind-utils \
+  https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.8.8-1.el7.ans.noarch.rpm \
+  https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
 
 # Clean up YUM when done.
-RUN yum clean all
+RUN ssh-keygen -b 2048 -t rsa -f -q -N ""
 
 ADD scripts /scripts
 RUN chmod +x /scripts/start.sh
@@ -20,14 +26,17 @@ RUN touch /first_run
 ADD etc/jenkins /etc/init.d/jenkins
 RUN chmod +x /etc/init.d/jenkins
 
-EXPOSE 8080 22
+EXPOSE 8080 22 80
 
-# Vagrant directory can be used for Vagrant-based scenarios,
-# but you can use it for general filesystem-share with the
-# host, e.g. you can place your Puppet manifests and execute
-# puppet apply inside the container.
-VOLUME ["/vagrant", "/run", "/var/lib/jenkins", "/var/log" "/var/cache/jenkins/war]
+
+VOLUME ["/var/lib/jenkins", "/var/log", "/var/cache/jenkins/war"]
 
 # Kicking in
 CMD ["/scripts/start.sh"]
+
+
+
+
+#docker run -d --name="jenkin" -p 10.74.68.64:8080:8080 -v /srv/docker/lon-dev-web:/srv/www -e USER="jenkins" -e PASS="jenkins" jenkins
+
 
